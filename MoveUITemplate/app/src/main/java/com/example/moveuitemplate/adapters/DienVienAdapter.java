@@ -36,7 +36,7 @@ public class DienVienAdapter extends RecyclerView.Adapter<DienVienAdapter.CastVi
 
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder holder, int position) {
-        Glide.with(mContext).load(mData.get(position).getImg_link()).into(holder.img);
+//        Glide.with(mContext).load(mData.get(position).getImg_link()).into(holder.img);
     }
 
     @Override

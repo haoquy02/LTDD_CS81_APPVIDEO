@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("imgURL", movie.getThumbnail());
         intent.putExtra("imgCover", movie.getCoverPhoto());
+        intent.putExtra("description", movie.getDescription());
         //Tạo animation
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 MainActivity.this, movieImageView, "sharedName"

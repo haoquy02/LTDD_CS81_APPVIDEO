@@ -3,6 +3,8 @@ package com.example.moveuitemplate.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class MovieModel  implements Parcelable {
     //Model Class for our movies
     private String title;
@@ -12,11 +14,12 @@ public class MovieModel  implements Parcelable {
     private float vote_average;
     private String movie_overview;
     private String backdrop_path;
+    private  String overview;
 
     //Constructor
 
     public MovieModel(String title, String poster_path, String release_date, int movie_id,
-                      float vote_average, String movie_overview,String backdrop_path) {
+                      float vote_average, String movie_overview,String backdrop_path,String overview) {
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
@@ -24,6 +27,7 @@ public class MovieModel  implements Parcelable {
         this.vote_average = vote_average;
         this.movie_overview = movie_overview;
         this.backdrop_path = backdrop_path;
+        this.overview = overview;
     }
 
     protected MovieModel(Parcel in) {
@@ -34,6 +38,7 @@ public class MovieModel  implements Parcelable {
         vote_average = in.readFloat();
         movie_overview = in.readString();
         backdrop_path = in.readString();
+        overview = in.readString();
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -59,6 +64,7 @@ public class MovieModel  implements Parcelable {
     }
     public String getPoster_path(){return poster_path;}
     public String getBackdrop_path(){return backdrop_path;}
+    public String getOverview(){return overview;}
     @Override
     public int describeContents() {
         return 0;
@@ -73,5 +79,6 @@ public class MovieModel  implements Parcelable {
         parcel.writeFloat(vote_average);
         parcel.writeString(movie_overview);
         parcel.writeString(backdrop_path);
+        parcel.writeString(overview);
     }
 }

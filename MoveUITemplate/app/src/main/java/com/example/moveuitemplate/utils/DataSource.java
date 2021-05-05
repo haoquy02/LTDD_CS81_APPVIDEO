@@ -15,7 +15,7 @@ public class DataSource {
         List<movie> lstMovies = new ArrayList<>();
         for (MovieModel movie : movies) {
 
-            lstMovies.add(new movie(movie.getTitle(), movie.getPoster_path(), movie.getBackdrop_path()));
+            lstMovies.add(new movie(movie.getTitle(), movie.getPoster_path(), movie.getBackdrop_path(),movie.getOverview()));
 
         }
         return lstMovies;
@@ -34,7 +34,7 @@ public class DataSource {
 
         for (MovieModel movie : movies) {
 
-            lstMovies.add(new movie(movie.getTitle(), movie.getPoster_path(), movie.getBackdrop_path()));
+            lstMovies.add(new movie(movie.getTitle(), movie.getPoster_path(), movie.getBackdrop_path(),movie.getOverview()));
 
         }
         return lstMovies;

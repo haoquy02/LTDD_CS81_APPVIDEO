@@ -1,5 +1,7 @@
 package com.example.moveuitemplate.models;
 
+import android.util.Log;
+
 public class movie {
 
     private String title;
@@ -10,10 +12,11 @@ public class movie {
     private String streamingLink;
     private String coverPhoto;
 
-    public movie(String title, String thumbnail, String coverPhoto) {
+    public movie(String title, String thumbnail, String coverPhoto,String overView) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
+        this.description = overView;
     }
 
     public movie(String title, String thumbnail) {

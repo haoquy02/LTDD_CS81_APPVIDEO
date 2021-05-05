@@ -1,28 +1,46 @@
 package com.example.moveuitemplate.models;
 
-public class dienvien {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    String name;
-    int img_link;
+public class dienvien implements Parcelable{
+    private String name;
+    private String profile_path;
 
-    public dienvien(String name, int img_link) {
-        this.name = name;
-        this.img_link = img_link;
+    protected dienvien(Parcel in) {
+        name = in.readString();
+        profile_path = in.readString();
     }
+    public dienvien(String name, String profile_path) {
+        this.name = name;
+        this.profile_path = profile_path;
+    }
+    public static final Creator<dienvien> CREATOR = new Creator<dienvien>() {
+        @Override
+        public dienvien createFromParcel(Parcel in) {
+            return new dienvien(in);
+        }
 
-    public String getName() {
+        @Override
+        public dienvien[] newArray(int size) {
+            return new dienvien[size];
+        }
+    };
+    public String getName()
+    {
         return name;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getImages ()
+    {
+        return profile_path;
     }
+    @Override
+    public int describeContents() {return 0;}
 
-    public int getImg_link() {
-        return img_link;
-    }
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(profile_path);
 
-    public void setImg_link(int img_link) {
-        this.img_link = img_link;
     }
 }

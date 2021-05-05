@@ -1,6 +1,7 @@
 package com.example.moveuitemplate.utils;
 
 import com.example.moveuitemplate.models.MovieModel;
+import com.example.moveuitemplate.response.Caster;
 import com.example.moveuitemplate.response.MovieSearchResponse;
 
 import retrofit2.Call;
@@ -23,4 +24,7 @@ public interface MovieApi {
     Call<MovieSearchResponse> getPopularMovie();
     @GET("https://api.themoviedb.org/3/movie/top_rated?api_key=cba2811f7a46c96495af2752c15b2d0c&language=en-US&page=1")
     Call<MovieSearchResponse> getTop();
+    @GET("https://api.themoviedb.org/3/movie/460465?api_key=cba2811f7a46c96495af2752c15b2d0c&append_to_response=credits")
+    Call<Caster> getMovieDetail(
+    );
 }

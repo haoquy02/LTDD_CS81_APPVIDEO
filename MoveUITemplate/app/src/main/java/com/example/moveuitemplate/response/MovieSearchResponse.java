@@ -1,6 +1,7 @@
 package com.example.moveuitemplate.response;
 
 import com.example.moveuitemplate.models.MovieModel;
+import com.example.moveuitemplate.models.dienvien;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,4 +31,5 @@ public class MovieSearchResponse {
                 ", movies=" + movies +
                 '}';
     }
+
 }
