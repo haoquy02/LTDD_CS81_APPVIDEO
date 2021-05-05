@@ -43,15 +43,15 @@ public class MovieDetailActivity extends AppCompatActivity {
         Rv_dienvien = findViewById(R.id.rv_dienvien);
         play_fab = findViewById(R.id.play_fab);
         String movieTitle = getIntent().getExtras().getString("title");
-        int imageResourceId = getIntent().getExtras().getInt("imgURL");
-        int imageCover = getIntent().getExtras().getInt("imgCover");
+        String imageResourceId = getIntent().getExtras().getString("imgURL");
+        String imageCover = getIntent().getExtras().getString("imgCover");
         MovieThumbnailImg = findViewById(R.id.detail_movie_img);
 
-        Glide.with(this).load(imageResourceId).into(MovieThumbnailImg);
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + imageResourceId).into(MovieThumbnailImg);
 
-        MovieThumbnailImg.setImageResource(imageResourceId);
+//        MovieThumbnailImg.setImageResource(imageResourceId);
         MovieCoverImg = findViewById(R.id.detail_movie_cover);
-        Glide.with(this).load(imageCover).into(MovieCoverImg);
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + imageCover).into(MovieCoverImg);
 
         tv_title = findViewById(R.id.detail_movie_title);
 
@@ -65,7 +65,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
 
     }
-
+    public void setImages(String image,ImageView place)
+    {
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + image).into(place);
+    }
     void setupRvCast(){
 
         List<dienvien> mdata = new ArrayList<>();

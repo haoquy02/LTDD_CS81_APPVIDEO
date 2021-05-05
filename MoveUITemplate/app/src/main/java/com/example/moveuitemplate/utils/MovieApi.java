@@ -21,4 +21,6 @@ public interface MovieApi {
     );
     @GET("https://api.themoviedb.org/3/movie/popular?api_key=cba2811f7a46c96495af2752c15b2d0c&language=en-US&page=1")
     Call<MovieSearchResponse> getPopularMovie();
+    @GET("https://api.themoviedb.org/3/movie/top_rated?api_key=cba2811f7a46c96495af2752c15b2d0c&language=en-US&page=1")
+    Call<MovieSearchResponse> getTop();
 }

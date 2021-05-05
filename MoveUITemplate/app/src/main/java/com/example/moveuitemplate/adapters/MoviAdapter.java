@@ -1,6 +1,8 @@
 package com.example.moveuitemplate.adapters;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.moveuitemplate.ui.MovieDetailActivity;
+import com.bumptech.glide.Glide;
 import com.example.moveuitemplate.R;
 import com.example.moveuitemplate.models.movie;
 
 import java.util.List;
 
 public class MoviAdapter extends RecyclerView.Adapter<MoviAdapter.MyViewHolder> {
-
     Context context;
     List<movie> mData;
     MovieItemClickListener movieItemClickListener;
@@ -41,9 +43,8 @@ public class MoviAdapter extends RecyclerView.Adapter<MoviAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.TvTitle.setText(mData.get(position).getTitle());
-        holder.ImgMovie.setImageResource(mData.get(position).getThumbnail());
-
-
+//        holder.ImgMovie.setImageURI(Uri.parse("https://image.tmdb.org/t/p/w500/" + mData.get(position).getThumbnail()));
+        Glide.with(context).load("https://image.tmdb.org/t/p/w500/" + mData.get(position).getThumbnail()).into( holder.ImgMovie);
     }
 
     @Override

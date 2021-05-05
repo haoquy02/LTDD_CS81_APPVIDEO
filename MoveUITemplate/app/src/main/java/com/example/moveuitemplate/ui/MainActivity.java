@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
         iniViews();
         iniSlider();
-        iniWeekMovies();
+        GetRetrofitResponseTop();
         GetRetrofitResponsePopular();
 
     }
 
-    private void iniWeekMovies() {
+    private void iniWeekMovies(List<MovieModel> movies) {
 
-        MoviAdapter weekMoviAdapter = new MoviAdapter(this, DataSource.getWeeMovies(), this);
+        MoviAdapter weekMoviAdapter = new MoviAdapter(this, DataSource.getWeeMovies(movies), this);
         movieRVWeek.setAdapter(weekMoviAdapter);
         movieRVWeek.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     private void iniSlider() {
         //prepare a list of slide
         lstSlides = new ArrayList<>();
-        lstSlides.add(new slide(R.drawable.anh1, "Phim 1"));
-        lstSlides.add(new slide(R.drawable.anh2, "Phim 2"));
-        lstSlides.add(new slide(R.drawable.anh3, "Phim 3"));
-        lstSlides.add(new slide(R.drawable.anh4, "Phim 4"));
+        lstSlides.add(new slide(R.drawable.anh1, "The Avergers : Endgame"));
+        lstSlides.add(new slide(R.drawable.anh2, "Thor 2 : The Dark World "));
+        lstSlides.add(new slide(R.drawable.anh3, "Venom 2"));
+        lstSlides.add(new slide(R.drawable.anh4, "Fast and Furiour : Hobbs & Shaw "));
 
         SlidePagerAdapter adapter = new SlidePagerAdapter(this, lstSlides);
 
@@ -139,35 +139,6 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             });
         }
     }
-    private void GetRetrofitResponse() {
-        MovieApi movieApi = Servicey.getMovieApi();
-        Call<MovieSearchResponse> responseCall = movieApi.searchMovie(
-                "Jack Reacher",
-                1);
-        responseCall.enqueue(new Callback<MovieSearchResponse>() {
-            @Override
-            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
-                if (response.code() == 200){
-                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-                    getPopularMovies(movies);
-                }
-                else
-                {
-                    try {
-                        Log.v("Tag","Error" + response.errorBody().string());
-                    }catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
     private void GetRetrofitResponsePopular() {
         MovieApi movieApi = Servicey.getMovieApi();
         Call<MovieSearchResponse> responseCall = movieApi.getPopularMovie();
@@ -195,31 +166,30 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             }
         });
     }
-    private void GetRetrofitResponseAccordingToID()
-    {
+    private void GetRetrofitResponseTop() {
         MovieApi movieApi = Servicey.getMovieApi();
-        Call<MovieModel> responseCall = movieApi.getMovie(550);
-        responseCall.enqueue(new Callback<MovieModel>() {
+        Call<MovieSearchResponse> responseCall = movieApi.getTop();
+        responseCall.enqueue(new Callback<MovieSearchResponse>() {
             @Override
-            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-                if (response.code() == 200)
-                {
-                    MovieModel movie = response.body();
-                    Log.v("Tag","The response " + movie.getTitle());
+            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
+                if (response.code() == 200){
+                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
+                    iniWeekMovies(movies);
                 }
                 else
                 {
                     try {
                         Log.v("Tag","Error" + response.errorBody().string());
-                    } catch (IOException e) {
+                    }catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<MovieModel> call, Throwable t) {
-
+            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
