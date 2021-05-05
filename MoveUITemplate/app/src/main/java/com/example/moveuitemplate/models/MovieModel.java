@@ -53,6 +53,7 @@ public class MovieModel  implements Parcelable {
     {
         return release_date;
     }
+    public String getPoster_path(){return poster_path;}
 
     @Override
     public int describeContents() {

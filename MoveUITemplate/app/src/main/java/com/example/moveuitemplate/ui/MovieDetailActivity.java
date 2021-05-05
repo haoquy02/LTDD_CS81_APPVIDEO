@@ -80,4 +80,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         Rv_dienvien.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
     }
+
+
 }

@@ -35,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.moveuitemplate.utils.DataSource.getPopularMovies;
+
 public class MainActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private List<slide> lstSlides;
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
         iniViews();
         iniSlider();
-        iniPopularMovies();
         iniWeekMovies();
+        GetRetrofitResponsePopular();
 
     }
 
@@ -64,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
     }
 
-    private void iniPopularMovies() {
+    private void iniPopularMovies(List<MovieModel> movies) {
         //RecyclerView
         //init data
 
 
-        MoviAdapter moviAdapter = new MoviAdapter(this, DataSource.getPopularMovies(), this);
+        MoviAdapter moviAdapter = new MoviAdapter(this, getPopularMovies(movies), this);
         MoviesRV.setAdapter(moviAdapter);
         MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
@@ -146,12 +148,35 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             @Override
             public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
                 if (response.code() == 200){
-                    Log.v("Tag","the response" + response.body().toString());
                     List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-                    for (MovieModel movie : movies)
+                    getPopularMovies(movies);
+                }
+                else
+                {
+                    try {
+                        Log.v("Tag","Error" + response.errorBody().string());
+                    }catch (IOException e)
                     {
-                        Log.v("Tag","The Title" + movie.getTitle());
+                        e.printStackTrace();
                     }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    private void GetRetrofitResponsePopular() {
+        MovieApi movieApi = Servicey.getMovieApi();
+        Call<MovieSearchResponse> responseCall = movieApi.getPopularMovie();
+        responseCall.enqueue(new Callback<MovieSearchResponse>() {
+            @Override
+            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
+                if (response.code() == 200){
+                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
+                    iniPopularMovies(movies);
                 }
                 else
                 {
@@ -180,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
                 if (response.code() == 200)
                 {
                     MovieModel movie = response.body();
-                    Log.v("Tag","The response "+movie.getTitle());
+                    Log.v("Tag","The response " + movie.getTitle());
                 }
                 else
                 {

@@ -19,4 +19,6 @@ public interface MovieApi {
     Call<MovieModel> getMovie(
             @Path("movie_id") int movie_id
     );
+    @GET("https://api.themoviedb.org/3/movie/popular?api_key=cba2811f7a46c96495af2752c15b2d0c&language=en-US&page=1")
+    Call<MovieSearchResponse> getPopularMovie();
 }
