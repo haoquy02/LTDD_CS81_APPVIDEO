@@ -11,26 +11,30 @@ public class movie {
     private String rating;
     private String streamingLink;
     private String coverPhoto;
+    private String movieID;
 
-    public movie(String title, String thumbnail, String coverPhoto,String overView) {
+    public movie(String title, String thumbnail, String coverPhoto,String overView,String movieID) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.coverPhoto = coverPhoto;
         this.description = overView;
+        this.movieID = movieID;
     }
 
-    public movie(String title, String thumbnail) {
+    public movie(String title, String thumbnail,String movieID) {
         this.title = title;
         this.thumbnail = thumbnail;
+        this.movieID = movieID;
     }
 
-    public movie(String title, String description, String thumbnail, String studio, String rating, String streamingLink) {
+    public movie(String title, String description, String thumbnail, String studio, String rating, String streamingLink,String movieID) {
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;
         this.studio = studio;
         this.rating = rating;
         this.streamingLink = streamingLink;
+        this.movieID = movieID;
     }
 
     public String getCoverPhoto() {
@@ -52,6 +56,7 @@ public class movie {
     public String getThumbnail() {
         return thumbnail;
     }
+    public String getMovieID() {return movieID;};
 
     public String getStudio() {
         return studio;

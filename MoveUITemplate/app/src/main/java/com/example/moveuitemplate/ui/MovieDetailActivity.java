@@ -39,6 +39,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private FloatingActionButton play_fab;
     private RecyclerView Rv_dienvien;
     private DienVienAdapter dienVienAdapter;
+    private List<dienvien> cast = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         //khởi tạo view
         initView();
-        setupRvCast();
-        GetRetrofitResponseTop();
+
+
 
     }
 
@@ -59,12 +60,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         String imageResourceId = getIntent().getExtras().getString("imgURL");
         String imageCover = getIntent().getExtras().getString("imgCover");
         String overViewMovie = getIntent().getExtras().getString("description");
+        String movie_API = getIntent().getExtras().getString("API");
+
+
+
+        GetRetrofitResponseCaster(movie_API);
         MovieThumbnailImg = findViewById(R.id.detail_movie_img);
+        Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + imageResourceId).into(MovieThumbnailImg);
 
-
-            Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + imageResourceId).into(MovieThumbnailImg);
-
-//        MovieThumbnailImg.setImageResource(imageResourceId);
         MovieCoverImg = findViewById(R.id.detail_movie_cover);
         Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + imageCover).into(MovieCoverImg);
 
@@ -83,30 +86,27 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
     }
-    public void setImages(String image,ImageView place)
-    {
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500/" + image).into(place);
-    }
+
+    //Hàm show diễn viên
     void setupRvCast(){
-
-        List<dienvien> mdata = new ArrayList<>();
-
-        dienVienAdapter = new DienVienAdapter(this, mdata);
+        dienVienAdapter = new DienVienAdapter(this, cast);
         Rv_dienvien.setAdapter(dienVienAdapter);
         Rv_dienvien.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
     }
-    private void GetRetrofitResponseTop() {
+    private void GetRetrofitResponseCaster(String movie_API) {
         MovieApi movieApi = Servicey.getMovieApi();
-        Call<Caster> responseCall = movieApi.getMovieDetail();
+        Call<Caster> responseCall = movieApi.getMovieDetail(movie_API);
         responseCall.enqueue(new Callback<Caster>() {
             @Override
             public void onResponse(Call<Caster> call, Response<Caster> response) {
                 if (response.code() == 200){
                     Map<String,List<Map<String,String>>> casters = response.body().getCast();
                     //casters.get("cast")
-                    for (Map<String,String> object: casters.get("cast")) {
-                        Log.v("Tag","Name " + object.get("name"));
+                    for (Map<String,String> info: casters.get("cast")) {
+                        dienvien castInfo = new dienvien(info.get("name"),info.get("profile_path"));
+                        cast.add(castInfo);
+
                     }
 
                 }
@@ -119,6 +119,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                setupRvCast();
             }
 
             @Override

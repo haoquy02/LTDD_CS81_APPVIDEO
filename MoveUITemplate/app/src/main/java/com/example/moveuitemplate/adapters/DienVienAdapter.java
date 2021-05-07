@@ -1,6 +1,7 @@
  package com.example.moveuitemplate.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class DienVienAdapter extends RecyclerView.Adapter<DienVienAdapter.CastVi
 
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder holder, int position) {
-//        Glide.with(mContext).load(mData.get(position).getImg_link()).into(holder.img);
+        Glide.with(mContext).load("https://image.tmdb.org/t/p/w500/" + mData.get(position).getImages()).into(holder.img);
     }
 
     @Override

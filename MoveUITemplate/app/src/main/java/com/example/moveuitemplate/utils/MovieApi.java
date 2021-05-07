@@ -24,7 +24,8 @@ public interface MovieApi {
     Call<MovieSearchResponse> getPopularMovie();
     @GET("https://api.themoviedb.org/3/movie/top_rated?api_key=cba2811f7a46c96495af2752c15b2d0c&language=en-US&page=1")
     Call<MovieSearchResponse> getTop();
-    @GET("https://api.themoviedb.org/3/movie/460465?api_key=cba2811f7a46c96495af2752c15b2d0c&append_to_response=credits")
+    @GET("https://api.themoviedb.org/3/movie/{movie_id}?api_key=cba2811f7a46c96495af2752c15b2d0c&append_to_response=credits")
     Call<Caster> getMovieDetail(
+            @Path("movie_id") String movie_id
     );
 }
