@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             });
         }
     }
+
     private void GetRetrofitResponsePopular() {
         MovieApi movieApi = Servicey.getMovieApi();
         Call<MovieSearchResponse> responseCall = movieApi.getPopularMovie();
