@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
+    android:orientation="vertical"
     android:background="@color/colorPrimary">
 
 
@@ -12,30 +13,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
 
+            <Button
+                android:id="@+id/btn_favoriteFlim"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
 
+                android:text="Phim yêu thích" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/slider_pager"
-        android:layout_width="0dp"
-        android:layout_height="275dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+            <Button
+                android:id="@+id/btn_theLoai"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="190dp"
+                android:text="Thể loại" />
+        </FrameLayout>
 
-    </androidx.viewpager.widget.ViewPager>
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            tools:ignore="MissingConstraints">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_pager"
-        app:tabBackground="@drawable/indicator_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp">
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slider_pager"
+            android:layout_width="0dp"
+            android:layout_height="275dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/slider_pager"
+            app:tabBackground="@drawable/indicator_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp">
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -66,6 +99,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
+
         <TextView
             android:id="@+id/txt_week_movies"
             android:layout_width="wrap_content"
@@ -95,5 +130,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_week_movies" />
 
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

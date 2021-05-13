@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoveUITemplate">
-<!--        <activity android:name=".ui.MovieDetailActivity"></activity>-->
-        <activity android:name=".ui.MovieLikeActivity">
+        <activity android:name=".ui.MovieDetailActivity"></activity>
+        <activity android:name=".ui.MovieLikeActivity"></activity>
+        <activity android:name=".ui.TheLoaiActivity"></activity>
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

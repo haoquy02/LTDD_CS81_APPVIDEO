@@ -1,16 +1,34 @@
 package com.example.moveuitemplate.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.moveuitemplate.adapters.SectionsPagerAdapter;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import com.google.android.material.tabs.TabLayout;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+
 
 import com.example.moveuitemplate.adapters.MoviAdapter;
 import com.example.moveuitemplate.adapters.MovieItemClickListener;
@@ -23,7 +41,6 @@ import com.example.moveuitemplate.request.Servicey;
 import com.example.moveuitemplate.response.MovieSearchResponse;
 import com.example.moveuitemplate.utils.DataSource;
 import com.example.moveuitemplate.utils.MovieApi;
-import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,17 +61,94 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     private TabLayout indicator;
     private RecyclerView MoviesRV, movieRVWeek;
 
+    private ViewPager mViewPager; //bar
+    private SectionsPagerAdapter mSectionsPagerAdapter; //bar
+    MaterialSearchView searchView;
+    Toolbar toolbar;
+    Button btnXemPhimYeuThich;
+    Button btnTheLoai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         iniViews();
         iniSlider();
         GetRetrofitResponseTop();
         GetRetrofitResponsePopular();
+        EventButton();
 
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
+
+
+    }
+
+    //Bar start
+
+
+    //Bar end;
+
+    private void searchViewCode()
+    {
+        searchView= (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setSuggestions(getResources().getStringArray(R.array.query_suggetions));
+        searchView.setEllipsize(true);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getApplicationContext(),"This is text", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        searchViewCode();
+        getMenuInflater().inflate(R.menu.my_menu,menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_search:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen())
+            searchView.closeSearch();
+        else
+            super.onBackPressed();
     }
 
     private void iniWeekMovies(List<MovieModel> movies) {
@@ -100,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         indicator = findViewById(R.id.indicator);
         MoviesRV = findViewById(R.id.Rv_movies);
         movieRVWeek = findViewById(R.id.rv_movies_week);
+        btnXemPhimYeuThich = findViewById(R.id.btn_favoriteFlim);
+        btnTheLoai = findViewById(R.id.btn_theLoai);
     }
 
     @Override
@@ -121,8 +217,6 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
         startActivity(intent, options.toBundle());
         //Test nếu click hoạt động
-
-
 
     }
 
@@ -194,6 +288,27 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             @Override
             public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
                 t.printStackTrace();
+            }
+        });
+    }
+
+    //Sự kiện button
+    private void EventButton(){
+        btnXemPhimYeuThich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,MovieLikeActivity.class);
+//                intent.putExtra("TenNguoiDung", edtUserYeuThich.getText().toString().replaceAll("\\s+",""));
+                startActivity(intent);
+//                setContentView(R.layout.phim_yeu_thich);
+            }
+        });
+
+        btnTheLoai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,TheLoaiActivity.class);
+                startActivity(intent);
             }
         });
     }

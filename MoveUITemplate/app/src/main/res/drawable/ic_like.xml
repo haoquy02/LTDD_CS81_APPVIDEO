@@ -6,4 +6,6 @@
 
     <item
         android:drawable="@drawable/ic_like1"/>
+
+<!--    ánh xạ để biết true/ false trong .java-->
 </selector>
