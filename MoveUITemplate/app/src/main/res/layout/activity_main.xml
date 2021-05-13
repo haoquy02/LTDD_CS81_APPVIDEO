@@ -17,21 +17,29 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            android:orientation="horizontal"
+            android:foregroundGravity="center">
 
             <Button
                 android:id="@+id/btn_favoriteFlim"
-                android:layout_width="190dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="Phim yêu thích" />
+                android:text="Favorite" />
 
             <Button
                 android:id="@+id/btn_theLoai"
-                android:layout_width="217dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="190dp"
-                android:text="Thể loại" />
+                android:text="Categories"
+                android:layout_marginLeft="120dp"/>
+
+            <Button
+                android:id="@+id/btn_TrangDieuHuong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="260dp"
+                android:text="dashboard" />
         </FrameLayout>
 
         <FrameLayout
