@@ -50,6 +50,9 @@ public class PhimYeuThichActivity extends AppCompatActivity {
     String idfavoritePhim;
     String idphim;
     String tenphim;
+    String imgphim;
+    String imgCover;
+    String description;
 
     //biến cho delete
     String urlDeleteFavoriteFilm = Server.urlDeleteFavoriteFilm;
@@ -81,12 +84,11 @@ public class PhimYeuThichActivity extends AppCompatActivity {
             finish();
         }
 
-
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PhimYeuThichActivity.this);
-                alertDialogBuilder.setMessage("Bán có muốn xóa sản phẩm này!" + position);
+                alertDialogBuilder.setMessage("Bán có muốn xóa sản phẩm này!");
                 alertDialogBuilder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -112,7 +114,21 @@ public class PhimYeuThichActivity extends AppCompatActivity {
             }
         });
 
-
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Phim p = (Phim) phimYeuThichAdapter.getItem(position);
+//                idfavoritePhim = p.getID();
+//
+//                Intent intent = new Intent(PhimYeuThichActivity.this, MovieDetailActivity.class);
+//                //Gửi thông tin film từ main đến detailActivity
+//                intent.putExtra("title2", mangPhim.get(position).getTenPhim());
+//                intent.putExtra("imgURL2", mangPhim.get(position).getThumbnail());
+//                intent.putExtra("imgCover2", mangPhim.get(position).getCoverPhoto());
+//                intent.putExtra("description2", mangPhim.get(position).getDescription());
+//                intent.putExtra("API2", mangPhim.get(position).getID());
+//            }
+//        });
 
     } // END OnCreate
 
@@ -124,9 +140,12 @@ public class PhimYeuThichActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("4", " *** Kiem tra respone thanh cong: " + response);
-                int id = 0;
-                String id_Phim = "";
-                String ten_Phim = "";
+                int on_id = 0;
+                String on_id_Phim = "";
+                String on_ten_Phim = "";
+                String on_img_Phim = "";
+                String on_img_Cover = "";
+                String on_description = "";
 
                 if (response != null) {
                     try {
@@ -134,17 +153,22 @@ public class PhimYeuThichActivity extends AppCompatActivity {
 //
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            id = jsonObject.getInt("ID");
-                            id_Phim = jsonObject.getString("IdPhim");
-                            ten_Phim = jsonObject.getString("TenPhim");
-                            mangPhim.add(new Phim(id_Phim, ten_Phim));
-                            //phimYeuThichAdapter.notifyDataSetChanged();
+                            //name lấy trong JSON
+                            on_id = jsonObject.getInt("ID");
+                            on_id_Phim = jsonObject.getString("IdPhim");
+                            on_ten_Phim = jsonObject.getString("TenPhim");
+                            on_img_Phim = jsonObject.getString("ImgUrl");
+                            on_img_Cover = jsonObject.getString("ImgCover");
+                            on_description = jsonObject.getString("MoTa");
 
-                            Log.d("tagconvertstr", " *** ["+ id + "---" + id_Phim + ten_Phim +"]");
+                            mangPhim.add(new Phim(on_id_Phim, on_ten_Phim, on_img_Phim, on_img_Cover, on_description ));
+
+
+                            Log.d("tagconvertstr", " *** ["+ on_id + "---" + on_id_Phim + "---"+ on_ten_Phim + on_img_Phim +"]");
                             //thong bao notifyDataSetChange
-                            Log.d("*** Trang thai: ", response);
+                            phimYeuThichAdapter.notifyDataSetChanged();
                         }
-                        phimYeuThichAdapter.notifyDataSetChanged();
+                        //phimYeuThichAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -164,8 +188,12 @@ public class PhimYeuThichActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> param = new HashMap<String, String>();
-                param.put("id_film", String.valueOf(idphim));
+                param.put("id_phim", String.valueOf(idphim));
                 param.put("ten_phim", String.valueOf(tenphim));
+                param.put("hinh_phim", String.valueOf(idphim));
+                param.put("anh_bia", String.valueOf(imgCover));
+                param.put("mo_ta", String.valueOf(description));
+
 
                 return param;
             }

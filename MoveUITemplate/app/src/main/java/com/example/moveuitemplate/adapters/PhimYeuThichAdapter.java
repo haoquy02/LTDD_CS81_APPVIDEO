@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.moveuitemplate.R;
 import com.example.moveuitemplate.models.Phim;
+import com.example.moveuitemplate.ui.PhimYeuThichActivity;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,8 @@ public class PhimYeuThichAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView tvTenPhim, tvIDPhim;
+        public TextView  tvTenPhim;
+        public ImageView ivImgPhim;
     }
 
     @Override
@@ -48,8 +52,8 @@ public class PhimYeuThichAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.dong_phimyeuthich, null);
-            viewHolder.tvIDPhim = view.findViewById(R.id.tv_idphim);
             viewHolder.tvTenPhim = view.findViewById(R.id.tv_tenphim);
+            viewHolder.ivImgPhim = view.findViewById(R.id.item_movie_img_like);
 
             view.setTag(viewHolder);
 
@@ -59,14 +63,14 @@ public class PhimYeuThichAdapter extends BaseAdapter {
         }
 
         Phim phim = (Phim) getItem(i);
-        viewHolder.tvIDPhim.setText(String.valueOf(phim.getID()));
+        String urlImg = phim.getThumbnail();
+        Glide.with(context).load("https://image.tmdb.org/t/p/w500/" + urlImg).into(viewHolder.ivImgPhim);
         viewHolder.tvTenPhim.setText(phim.getTenPhim());
 
 
 
         return view;
     }
-
 
 
 }

@@ -40,6 +40,8 @@ public class DashBoardActivity extends AppCompatActivity {
         HomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Truyền id_user từ dashboar -> mainactivity
                 Intent intent = new Intent(DashBoardActivity.this, MainActivity.class);
                 intent.putExtra("UserString", UserHolder);
                 startActivity(intent);
@@ -53,6 +55,12 @@ public class DashBoardActivity extends AppCompatActivity {
         Intent loginToDashboard = getIntent();
         UserHolder = loginToDashboard.getStringExtra("UserString");
         UserShow.setText(UserHolder);
+
+        //Nhận ID user từ MainActivity -> DashBoardActivity
+        Intent mainActivityToDashboard = getIntent();
+        UserHolder = mainActivityToDashboard.getStringExtra("UserString");
+        UserShow.setText(UserHolder);
+
     }
 
     private void anhxa() {

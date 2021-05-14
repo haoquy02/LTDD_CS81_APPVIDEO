@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     private DienVienAdapter dienVienAdapter;
     private List<dienvien> cast = new ArrayList<>();
 
+
+    String movieTitle = "";
+    String imageResourceId = "";
+    String imageCover = "";
+    String overViewMovie = "";
+    String movie_API = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         String overViewMovie = getIntent().getExtras().getString("description");
         String movie_API = getIntent().getExtras().getString("API");
 
+
+//        Intent intent = getIntent();
+//        movieTitle = intent.getStringExtra("title2");
+//        imageResourceId = intent.getStringExtra("imgURL2");
+//        imageCover = intent.getStringExtra("imgCover2");
+//        overViewMovie = intent.getStringExtra("description2");
+//        movie_API = intent.getStringExtra("API2");
 
 
         GetRetrofitResponseCaster(movie_API);

@@ -68,12 +68,17 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     Button btnXemPhimYeuThich;
     Button btnTheLoai;
 
+    //Dũng thêm
+    Button btnTrangDieuHuong;
+    String id_user;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        nhanDuLieu();
         iniViews();
         iniSlider();
         GetRetrofitResponseTop();
@@ -196,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         movieRVWeek = findViewById(R.id.rv_movies_week);
         btnXemPhimYeuThich = findViewById(R.id.btn_favoriteFlim);
         btnTheLoai = findViewById(R.id.btn_theLoai);
+        btnTrangDieuHuong = findViewById(R.id.btn_TrangDieuHuong);
     }
 
     @Override
@@ -203,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         //Hàm đưa ra thông tin chi tiết của phim
 
         Intent intent = new Intent(this, MovieDetailActivity.class);
-        //Gửi thông tin film đến detailActivity
+        //Gửi thông tin film từ main đến detailActivity
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("imgURL", movie.getThumbnail());
         intent.putExtra("imgCover", movie.getCoverPhoto());
@@ -297,10 +303,20 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         btnXemPhimYeuThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MovieLikeActivity.class);
-//                intent.putExtra("TenNguoiDung", edtUserYeuThich.getText().toString().replaceAll("\\s+",""));
+
+// -----Dũng comment phần của Phát, code của Dũng ở dưới----
+//                Intent intent = new Intent(MainActivity.this,MovieLikeActivity.class);
+////                intent.putExtra("TenNguoiDung", edtUserYeuThich.getText().toString().replaceAll("\\s+",""));
+//                startActivity(intent);
+////                setContentView(R.layout.phim_yeu_thich);
+
+
+                //Phần Dũng thêm
+                Intent intent = new Intent(MainActivity.this,PhimYeuThichActivity.class);
+                intent.putExtra("TenNguoiDung", id_user);
                 startActivity(intent);
-//                setContentView(R.layout.phim_yeu_thich);
+
+
             }
         });
 
@@ -311,5 +327,22 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
                 startActivity(intent);
             }
         });
+
+        btnTrangDieuHuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+                //Truyền id_user từ Main->DashboardActivity
+                Intent intent = new Intent(MainActivity.this, DashBoardActivity.class);
+                intent.putExtra("UserString", id_user);
+                startActivity(intent);
+            }
+        });
+
+    }
+    private void nhanDuLieu() {
+        Intent intent = getIntent();
+        id_user = intent.getStringExtra("UserString");
     }
 }

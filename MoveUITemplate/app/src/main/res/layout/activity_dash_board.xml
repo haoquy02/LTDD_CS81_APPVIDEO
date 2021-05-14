@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.DashBoardActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#718792">
 
     <TextView
-        android:text="- Trang điều hướng -"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
+        android:background="#1c313a"
         android:textColor="@color/white"
         android:textSize="40dp"
         android:gravity="center"/>
@@ -37,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/UserShow"
-            android:textColor="@color/purple_700"
+            android:textColor="#cddc39"
             android:textSize="30dp"
             android:textStyle="italic"
             android:gravity="center"/>
