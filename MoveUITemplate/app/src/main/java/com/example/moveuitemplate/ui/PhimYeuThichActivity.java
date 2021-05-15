@@ -234,9 +234,8 @@ public class PhimYeuThichActivity extends AppCompatActivity {
             protected void onPostExecute(String httpResponseMsg) {
                 super.onPostExecute(httpResponseMsg);
                 progressDialog2.dismiss();
-                Toast.makeText(PhimYeuThichActivity.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(PhimYeuThichActivity.this, httpResponseMsg, Toast.LENGTH_SHORT).show();
             }
-
             @SuppressLint("LongLogTag")
             @Override
             protected String doInBackground(String... params) {

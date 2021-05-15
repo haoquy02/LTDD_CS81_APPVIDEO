@@ -1,4 +1,4 @@
-package com.example.moveuitemplate.ui;
+package com.example.moveuitemplate.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -24,6 +24,7 @@ import com.example.moveuitemplate.models.MovieModel;
 import com.example.moveuitemplate.models.movie;
 import com.example.moveuitemplate.request.Servicey;
 import com.example.moveuitemplate.response.MovieSearchResponse;
+import com.example.moveuitemplate.ui.MovieDetailActivity;
 import com.example.moveuitemplate.utils.DataSource;
 import com.example.moveuitemplate.utils.MovieApi;
 
@@ -39,11 +40,11 @@ import static com.example.moveuitemplate.utils.DataSource.getPopularMovies;
 import static com.example.moveuitemplate.utils.DataSource.getWeeMovies;
 
 //Action movie
-public class Frag2 extends Fragment implements MovieItemClickListener {
+public class Frag2_Horror extends Fragment implements MovieItemClickListener {
 
     View v;
     private RecyclerView MoviesRV;
-
+    String id_user = "";
 
     @Nullable
     @Override
@@ -56,10 +57,13 @@ public class Frag2 extends Fragment implements MovieItemClickListener {
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetRetrofitResponseTop();
+        if (getArguments() != null) {
+            id_user = getArguments().getString("UserID");
+        }
+        GetRetrofitResponseHorror();
     }
 
-    private void iniWeekMovies(List<MovieModel> movies) {
+    private void iniHorrorMovies(List<MovieModel> movies) {
 
         MoviesRV = (RecyclerView) v.findViewById(R.id.Rv_love_movie);
         MoviLikeAdapter moviLikeAdapter = new MoviLikeAdapter(getContext(), getWeeMovies(movies), this);
@@ -71,15 +75,15 @@ public class Frag2 extends Fragment implements MovieItemClickListener {
 
 
 
-    private void GetRetrofitResponseTop() {
+    private void GetRetrofitResponseHorror() {
         MovieApi movieApi = Servicey.getMovieApi();
-        Call<MovieSearchResponse> responseCall = movieApi.getTop();
+        Call<MovieSearchResponse> responseCall = movieApi.getHorror();
         responseCall.enqueue(new Callback<MovieSearchResponse>() {
             @Override
             public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
                 if (response.code() == 200){
                     List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-                    iniWeekMovies(movies);
+                    iniHorrorMovies(movies);
                 }
                 else
                 {

@@ -117,12 +117,18 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, DashBoardActivity.class);
                     intent.putExtra("UserString", user);
                     startActivity(intent);
+                    //Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                 }
-                else{
+                else if (httpResponseMsg.equalsIgnoreCase("Wrong Data")) {
                     Log.d(" - Kiem tra login: ", "*** Error at method onPostExecute - LoginActivity! " +
                             "\nSai thong tin dang nhap!!!");
 
                     Toast.makeText(LoginActivity.this, "Sai thông tin đăng nhập!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d(" - Kiem tra login: ", "*** Error at method onPostExecute - LoginActivity! " +
+                            "\nKhong co ket noi!!!");
+                    Toast.makeText(LoginActivity.this, "Kiểm tra lại kết nối!!!", Toast.LENGTH_SHORT).show();
                 }
 
             }

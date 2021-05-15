@@ -1,6 +1,7 @@
 package com.example.moveuitemplate.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.moveuitemplate.adapters.SectionsPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
     Toolbar toolbar;
     Button btnXemPhimYeuThich;
     Button btnTheLoai;
+    private FloatingActionButton play_fab2;
 
     //Dũng thêm
     Button btnTrangDieuHuong;
@@ -130,10 +134,11 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        searchViewCode();
-        getMenuInflater().inflate(R.menu.my_menu,menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+//        searchViewCode();
+//        getMenuInflater().inflate(R.menu.my_menu,menu);
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
+//        GetRetrofitResponseSearch();
         return true;
     }
 
@@ -202,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         btnXemPhimYeuThich = findViewById(R.id.btn_favoriteFlim);
         btnTheLoai = findViewById(R.id.btn_theLoai);
         btnTrangDieuHuong = findViewById(R.id.btn_TrangDieuHuong);
+        play_fab2 = findViewById(R.id.fa_playfab2);
     }
 
     @Override
@@ -215,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         intent.putExtra("imgCover", movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
         intent.putExtra("API", movie.getMovieID());
+        intent.putExtra("userID", id_user);
 
         //Tạo animation
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
@@ -297,9 +304,46 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             }
         });
     }
+    private void GetRetrofitResponseSearch(String movieName) {
+        MovieApi movieApi = Servicey.getMovieApi();
+        Call<MovieSearchResponse> responseCall = movieApi.getMovieSearch(movieName);
+        responseCall.enqueue(new Callback<MovieSearchResponse>() {
+            @Override
+            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
+                if (response.code() == 200){
+                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
+                    iniWeekMovies(movies);//truyen thong tin phim sang detail
+                }
+                else
+                {
+                    try {
+                        Log.v("Tag","Error" + response.errorBody().string());
+                    }catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
     //Sự kiện button
+
     private void EventButton(){
+
+//        play_fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, MoviePlayerActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
         btnXemPhimYeuThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,6 +368,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,TheLoaiActivity.class);
+                intent.putExtra("UserID", id_user);
                 startActivity(intent);
             }
         });
@@ -331,8 +376,6 @@ public class MainActivity extends AppCompatActivity implements MovieItemClickLis
         btnTrangDieuHuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-
                 //Truyền id_user từ Main->DashboardActivity
                 Intent intent = new Intent(MainActivity.this, DashBoardActivity.class);
                 intent.putExtra("UserString", id_user);

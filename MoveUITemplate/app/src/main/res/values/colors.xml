@@ -16,4 +16,5 @@
     <color name="colorAccent">#f1b814</color>
     <color name="text_light_blue">#6699FF</color>
     <color name="text_bg_blue">#1a242f</color>
+    <color name="player_bg">#000000</color>
 </resources>

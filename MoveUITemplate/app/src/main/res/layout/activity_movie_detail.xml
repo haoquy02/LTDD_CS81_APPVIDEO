@@ -12,12 +12,11 @@
         android:layout_height="match_parent">
 
         <CheckBox
-            android:id="@+id/btn_like"
+            android:id="@+id/cb_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_like"
             android:button="@null"
-            android:checked="false"
             app:layout_constraintBottom_toTopOf="@+id/detail_movie_desc"
             app:layout_constraintEnd_toEndOf="@+id/detail_movie_title"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -40,7 +40,6 @@ public class DashBoardActivity extends AppCompatActivity {
         HomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Truyền id_user từ dashboar -> mainactivity
                 Intent intent = new Intent(DashBoardActivity.this, MainActivity.class);
                 intent.putExtra("UserString", UserHolder);

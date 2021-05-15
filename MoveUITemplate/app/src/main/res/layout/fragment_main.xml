@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.moveuitemplate.ui.MainActivity$PlaceholderFragment"
+    tools:context="com.example.moveuitemplate.ui.MainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.tabs.TabLayout
@@ -14,6 +14,7 @@
         android:background="@color/colorPrimary"
         app:tabTextColor="@color/white"
         app:tabGravity="fill"
+        app:tabMode="scrollable"
         app:tabIndicatorColor="@color/colorAccent">
 
     </com.google.android.material.tabs.TabLayout>

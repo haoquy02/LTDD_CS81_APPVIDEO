@@ -27,5 +27,25 @@ public interface MovieApi {
     @GET("https://api.themoviedb.org/3/movie/{movie_id}?api_key=cba2811f7a46c96495af2752c15b2d0c&append_to_response=credits")
     Call<Caster> getMovieDetail(
             @Path("movie_id") String movie_id
+
+    );
+    @GET("https://api.themoviedb.org/3/discover/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&with_genres=27")
+    Call<MovieSearchResponse> getHorror();
+
+    @GET("https://api.themoviedb.org/3/discover/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&with_genres=12")
+    Call<MovieSearchResponse> getAdventure();
+
+    @GET("https://api.themoviedb.org/3/discover/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&with_genres=35")
+    Call<MovieSearchResponse> getComedy();
+
+    @GET("https://api.themoviedb.org/3/discover/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&with_genres=99")
+    Call<MovieSearchResponse> getDocumentary();
+
+    @GET("https://api.themoviedb.org/3/discover/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&with_genres=36")
+    Call<MovieSearchResponse> getHistory();
+    @GET("https://api.themoviedb.org/3/search/movie?api_key=cba2811f7a46c96495af2752c15b2d0c&query=movie_name&language=en-US&page=1&include_adult=false")
+    Call<MovieSearchResponse> getMovieSearch(
+            @Path("movie_name") String movie_name
+
     );
 }

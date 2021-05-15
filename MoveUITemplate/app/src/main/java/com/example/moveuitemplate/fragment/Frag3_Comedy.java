@@ -1,9 +1,8 @@
-package com.example.moveuitemplate.ui;
+package com.example.moveuitemplate.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moveuitemplate.R;
-import com.example.moveuitemplate.adapters.MoviAdapter;
 import com.example.moveuitemplate.adapters.MoviLikeAdapter;
 import com.example.moveuitemplate.adapters.MovieItemClickListener;
-import com.example.moveuitemplate.adapters.SectionsPagerAdapter;
 import com.example.moveuitemplate.models.MovieModel;
 import com.example.moveuitemplate.models.movie;
 import com.example.moveuitemplate.request.Servicey;
 import com.example.moveuitemplate.response.MovieSearchResponse;
+import com.example.moveuitemplate.ui.MovieDetailActivity;
 import com.example.moveuitemplate.utils.MovieApi;
 
 import java.io.IOException;
@@ -37,13 +35,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.moveuitemplate.utils.DataSource.getPopularMovies;
+import static com.example.moveuitemplate.utils.DataSource.getWeeMovies;
 
 //Action movie
-public class Frag1 extends Fragment implements MovieItemClickListener {
+public class Frag3_Comedy extends Fragment implements MovieItemClickListener {
 
     View v;
     private RecyclerView MoviesRV;
-
+    String id_user = "";
 
     @Nullable
     @Override
@@ -57,28 +56,31 @@ public class Frag1 extends Fragment implements MovieItemClickListener {
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetRetrofitResponsePopular();
+        if (getArguments() != null) {
+            id_user = getArguments().getString("UserID");
+        }
+        GetRetrofitResponseComedy();
     }
 
-    private void iniPopularMovies(List<MovieModel> movies) {
+    private void iniComedyMovies(List<MovieModel> movies) {
         //RecyclerView
         //init data
 
         MoviesRV = (RecyclerView) v.findViewById(R.id.Rv_action_movie);
-        MoviLikeAdapter moviLikeAdapter = new MoviLikeAdapter(getContext(), getPopularMovies(movies), this);
+        MoviLikeAdapter moviLikeAdapter = new MoviLikeAdapter(getContext(), getWeeMovies(movies), this);
         MoviesRV.setAdapter(moviLikeAdapter);
         MoviesRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
-    private void GetRetrofitResponsePopular() {
+    private void GetRetrofitResponseComedy() {
         MovieApi movieApi = Servicey.getMovieApi();
-        Call<MovieSearchResponse> responseCall = movieApi.getPopularMovie();
+        Call<MovieSearchResponse> responseCall = movieApi.getComedy();
         responseCall.enqueue(new Callback<MovieSearchResponse>() {
             @Override
             public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
                 if (response.code() == 200){
                     List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-                    iniPopularMovies(movies);
+                    iniComedyMovies(movies);
                 }
                 else
                 {

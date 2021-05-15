@@ -3,6 +3,13 @@ plugins {
 }
 
 android {
+
+    compileOptions{
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -64,6 +71,9 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    //Exoplayer library
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 
 
 }

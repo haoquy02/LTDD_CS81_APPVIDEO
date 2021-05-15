@@ -1,6 +1,7 @@
 package com.example.moveuitemplate.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.moveuitemplate.R;
 import com.example.moveuitemplate.models.slide;
+import com.example.moveuitemplate.ui.MainActivity;
+import com.example.moveuitemplate.ui.MoviePlayerActivity;
+import com.google.android.exoplayer2.util.Log;
 
 import java.util.List;
 
@@ -19,6 +23,8 @@ public class SlidePagerAdapter extends PagerAdapter {
 
     private Context mcontext;
     private List<slide> mList;
+
+    MovieItemClickListener movieItemClickListener;
 
 
     public SlidePagerAdapter(Context mcontext, List<slide> mList) {
@@ -38,6 +44,17 @@ public class SlidePagerAdapter extends PagerAdapter {
         TextView slideText = slideLayout.findViewById(R.id.slide_title);
         slideImg.setImageResource(mList.get(position).getImage());
         slideText.setText(mList.get(position).getTitle());
+
+
+
+        slideLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("TAG", "This page was clicked: " + position);
+                Intent intent = new Intent(mcontext, MoviePlayerActivity.class);
+                startUpdate(container);
+            }
+        });
 
         container.addView(slideLayout);
         return slideLayout;

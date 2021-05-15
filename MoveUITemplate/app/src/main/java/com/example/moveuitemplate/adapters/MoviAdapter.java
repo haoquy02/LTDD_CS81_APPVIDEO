@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moveuitemplate.ui.Frag1;
 import com.bumptech.glide.Glide;
 import com.example.moveuitemplate.R;
 import com.example.moveuitemplate.models.movie;

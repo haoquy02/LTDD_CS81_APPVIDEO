@@ -53,7 +53,8 @@
                 android:id="@+id/edt_passwordLogin"
                 android:layout_marginBottom="5dp"
                 android:layout_width="252dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
         </LinearLayout>
 
         <LinearLayout

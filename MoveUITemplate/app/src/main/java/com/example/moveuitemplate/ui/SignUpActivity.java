@@ -2,12 +2,14 @@ package com.example.moveuitemplate.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,7 +46,6 @@ public class SignUpActivity extends AppCompatActivity {
             EventButton();
         } else {
             CheckConnection.ShowToast(getApplicationContext(), "Kiểm tra lại kết nối!");
-
         }
 
     }
@@ -54,37 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnTaoTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String tdn = edtTaiKhoan.getText().toString().replaceAll("\\s+","");
-                final String mk = edtMatKhau.getText().toString().replaceAll("\\s+","");
-
-                if (tdn.length() > 0 && tdn.length() <= 15 && mk.length() >0 && mk.length() <= 15) {
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.urlSignUp, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("*** Trang thai: ", response);
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String, String> hashMap = new HashMap<String, String>();
-                            hashMap.put("tendangnhap", tdn);
-                            hashMap.put("matkhau", mk);
-                            return hashMap;
-                        }
-                    };
-                    requestQueue.add(stringRequest);
-
-                }
-                else {
-                    CheckConnection.ShowToast(getApplicationContext(), "Kiểm tra lại dữ liệu nhập vào!");
-                }
-
+                SignUpFunction();
 
             }
         });
@@ -99,6 +70,42 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void SignUpFunction() {
+        final String tdn = edtTaiKhoan.getText().toString().replaceAll("\\s+","");
+        final String mk = edtMatKhau.getText().toString().replaceAll("\\s+","");
+
+        if (tdn.length() > 0 && tdn.length() <= 15 && mk.length() >0 && mk.length() <= 15) {
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.urlSignUp, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("*** Trang thai: ", response);
+                    Toast.makeText(SignUpActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }, new Response.ErrorListener() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Trang thai onErrorRespone: ", " *** Kiểm tra lại kết nối nha~~~");
+                    Toast.makeText(SignUpActivity.this, "Kiểm tra lại kết nối !!!", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("tendangnhap", tdn);
+                    hashMap.put("matkhau", mk);
+                    return hashMap;
+                }
+            };
+            requestQueue.add(stringRequest);
+
+        }
+        else {
+            CheckConnection.ShowToast(getApplicationContext(), "Kiểm tra lại dữ liệu nhập vào!");
+        }
     }
 
     private void anhxa () {

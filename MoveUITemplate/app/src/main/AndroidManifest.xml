@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoveUITemplate">
-        <activity android:name=".ui.DashBoardActivity"></activity>
+        <activity android:name=".ui.MoviePlayerActivity"></activity>
+        <activity android:name=".ui.DashBoardActivity" />
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
