@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,8 +59,10 @@ public class Frag1_Adventure extends Fragment implements MovieItemClickListener 
     public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id_user = getArguments().getString("UserID");
+            id_user = getArguments().getString("userID");
         }
+
+        Log.d("Frag1 iduser", id_user);
         GetRetrofitResponseAdventure();
     }
 
@@ -112,7 +115,11 @@ public class Frag1_Adventure extends Fragment implements MovieItemClickListener 
         intent.putExtra("imgCover", movie.getCoverPhoto());
         intent.putExtra("description", movie.getDescription());
         intent.putExtra("API", movie.getMovieID());
-        intent.putExtra("UserID,", id_user);
+
+        //intent.putExtra("userID,", id_user); //Đang lỗi ở đây
+
+        Log.d("Frag1 iduser", id_user);
+
         //Tạo animation
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 (Activity) v.getContext(), movieImageView, "sharedName"

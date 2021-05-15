@@ -100,12 +100,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         imageCover = getIntent().getExtras().getString("imgCover");
         overViewMovie = getIntent().getExtras().getString("description");
         movie_API = getIntent().getExtras().getString("API");
+
+        //Đang bí
         id_user = getIntent().getStringExtra("userID");
 
 
         movieTitle = movieTitle.replaceAll("'", "");
-
         overViewMovie = overViewMovie.replaceAll("'", "");
+
 
         GetRetrofitResponseCaster(movie_API);
         MovieThumbnailImg = findViewById(R.id.detail_movie_img);
@@ -128,7 +130,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\tId user: " + id_user);
+        //stringBuilder.append("\tId user: " + id_user);
         stringBuilder.append("\tID film: " + movie_API);
         stringBuilder.append("\tTitle: " + movieTitle);
         stringBuilder.append("\tImg: " + imageResourceId);
